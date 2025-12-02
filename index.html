@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" href="tsp.png" type="image/png">
     <title>个人介绍 | 汤学斌</title>
-    <!-- 引入Font Awesome图标库 -->
+
+    <!-- 字体与图标（和你原来一样） -->
     <link href="https://db.onlinewebfonts.com/c/db06deb90e37840ea564f982bed24d55?family=FZYingBiKaiShu-S15S" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* 基础样式 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'FZYingBiKaiShu-S15S', sans-serif;
-        }
-        
-        :root {
+        /* ===========================
+           基础样式（保留并扩展你原有的） 
+           =========================== */
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI','FZYingBiKaiShu-S15S', sans-serif; }
+        :root{
             --primary-color: #3498db;
             --secondary-color: #2980b9;
             --accent-color: #e74c3c;
@@ -25,167 +23,79 @@
             --dark-color: #2c3e50;
             --text-color: #333;
             --text-light: #7f8c8d;
+            --hero-overlay: rgba(0,0,0,0.4);
         }
-        
-        body {
-            background-color: #f9f9f9;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        section {
-            padding: 80px 0;
-        }
-        
-        h1, h2, h3 {
-            margin-bottom: 20px;
-            color: var(--dark-color);
-        }
-        
-        p {
-            margin-bottom: 15px;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        
-        .btn:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* 导航栏 */
-        header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark-color);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        /* 英雄区域 */
+        body{ background-color:#f9f9f9; color:var(--text-color); line-height:1.6; transition:background-color .3s, color .3s;}
+        .container{ max-width:1200px; margin:0 auto; padding:0 20px;}
+        section{ padding:80px 0;}
+        h1,h2,h3{ margin-bottom:20px; color:var(--dark-color); }
+        p{ margin-bottom:15px; }
+        .btn{ display:inline-block; padding:12px 30px; background-color:var(--primary-color); color:#fff; text-decoration:none; border-radius:5px; transition:all .3s; border:none; cursor:pointer; font-weight:600;}
+        .btn:hover{ background-color:var(--secondary-color); transform:translateY(-3px); box-shadow:0 5px 15px rgba(0,0,0,.1); }
+
+        /* ===== 导航栏 ===== */
+        header { background-color: white; box-shadow:0 2px 10px rgba(0,0,0,.08); position:fixed; width:100%; top:0; z-index:1000; }
+        nav{ display:flex; justify-content:space-between; align-items:center; padding:20px 0; }
+        .logo { font-size:24px; font-weight:700; color:var(--primary-color); display:flex; align-items:center; gap:12px; }
+        .logo img{ max-height:46px; display:block; }
+        .nav-links{ display:flex; list-style:none; gap:28px; align-items:center; }
+        .nav-links a{ text-decoration:none; color:var(--dark-color); font-weight:500; transition:color .3s; }
+        .nav-links a:hover, .nav-links a.active{ color:var(--primary-color); }
+        /* 手机汉堡按钮 */
+        .hamburger { display:none; cursor:pointer; font-size:22px; padding:8px; border-radius:6px; }
+        .nav-mobile { display:none; position:fixed; top:70px; right:20px; background:white; box-shadow:0 8px 30px rgba(0,0,0,.15); padding:12px 18px; border-radius:8px; z-index:1200; }
+
+        /* ===== HERO（轮播） =====
+           我把之前 hero::before 的纯背景动画改成了一个真正的滑动轮播容器，
+           支持淡入淡出、自动播放、暂停、箭头、圆点、触摸滑动
+        */
         .hero {
-    color: white;
-    text-align: center;
-    padding: 150px 0 100px;
-    margin-top: 70px;
-    position: relative;
-    overflow: hidden;
-}
-
-/* 创建背景容器 */
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 300%; /* 三张图片的宽度 */
-    height: 100%;
-    background-image: 
-        url('earth.jpg'),
-        url('OMEN_Techrunner.png'), 
-        url('hok1.jpg');
-    background-repeat: no-repeat;
-    background-position: 
-        center center, 
-        center center, 
-        center center;
-    background-size: cover;
-    animation: slideShow 15s ease-in-out infinite;
-    z-index: -1;
-}
-
-/* 添加遮罩层增强文字可读性 */
-.hero::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* 半透明遮罩 */
-    z-index: -1;
-}
-
-/* 定义轮播动画 */
-@keyframes slideShow {
-    0%, 25% {
-        transform: translateX(0);
-    }
-    33.33%, 58.33% {
-        transform: translateX(-33.33%);
-    }
-    66.66%, 91.66% {
-        transform: translateX(-66.66%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-        
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: white;
+            position: relative;
+            margin-top: 70px; /* 留出固定头部 */
+            overflow: hidden;
+            height: 100vh;
+            min-height: 520px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
         }
-        
-        .hero p {
-            font-size: 20px;
-            max-width: 700px;
-            margin: 0 auto 30px;
+
+        /* 轮播外壳（绝对定位填满 hero） */
+        .slider {
+            position:absolute;
+            inset:0;
+            overflow:hidden;
         }
-        
+
+        .slides {
+            position:relative;
+            height:100%;
+            width:100%;
+        }
+
+        .slide {
+            position:absolute;
+            inset:0;
+            background-size:cover;
+            background-position:center;
+            opacity:0;
+            transition:opacity 1s ease-in-out;
+            transform: scale(1.02);
+        }
+        .slide.active { opacity:1; transform: scale(1); }
+
+        /* 遮罩层，增强可读性 */
+        .hero-overlay { position:absolute; inset:0; background:var(--hero-overlay); pointer-events:none; z-index:2; }
+
+        /* HERO 内容（头像与文字）——置于轮播之上 */
+        .hero-content {
+            position:relative;
+            z-index:3;
+            text-align:center;
+            padding:30px;
+            width:100%;
+        }
         .avatar {
             width: 200px;
             height: 200px;
@@ -196,179 +106,74 @@
             border: 5px solid white;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        
         .avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
-        /* 关于我 */
-        .about {
-            background-color: white;
+
+
+        .hero h1{ font-size:48px; margin-bottom:12px; color:#fff; text-shadow:0 6px 20px rgba(0,0,0,.5); }
+        .hero p{ font-size:20px; max-width:700px; margin:0 auto 18px; color:#f6f6f6; text-shadow:0 4px 14px rgba(0,0,0,.45); }
+
+        /* 箭头 */
+        .arrow {
+            position:absolute;
+            top:50%;
+            transform:translateY(-50%);
+            z-index:4;
+            width:58px;
+            height:58px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-radius:6px;
+            background: rgba(0,0,0,0.45);
+            color:white;
+            font-size:26px;
+            cursor:pointer;
+            user-select:none;
+            transition:background .2s, transform .5s;
         }
-        
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-        }
-        
-        .about-text {
-            flex: 1;
-        }
-        
-        .about-image {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .about-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* 技能 */
-        .skills {
-            background-color: var(--light-color);
-        }
-        
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .skill-item {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-        }
-        
-        .skill-item:hover {
-            transform: translateY(-10px);
-        }
-        
-        .skill-item h3 {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .skill-item h3 i {
-            margin-right: 10px;
-            color: var(--primary-color);
-        }
-        
-        .skill-bar {
-            height: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        
-        .skill-level {
-            height: 100%;
-            background-color: var(--primary-color);
-            border-radius: 5px;
-        }
-        
-        /* 经历 */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 6px;
-            background-color: var(--primary-color);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -3px;
-        }
-        
-        .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            width: 50%;
-            box-sizing: border-box;
-        }
-        
-        .timeline-item:nth-child(odd) {
-            left: 0;
-        }
-        
-        .timeline-item:nth-child(even) {
-            left: 50%;
-        }
-        
-        .timeline-content {
-            padding: 20px 30px;
-            background-color: white;
-            position: relative;
-            border-radius: 6px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            right: -13px;
-            background-color: white;
-            border: 4px solid var(--primary-color);
-            top: 15px;
-            border-radius: 50%;
-            z-index: 1;
-        }
-        
-        .timeline-item:nth-child(even)::after {
-            left: -12px;
-        }
-        
-        /* 联系我 */
-        .contact {
-            background-color: white;
-        }
-        
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        
-        textarea.form-control {
-            min-height: 150px;
-            resize: vertical;
-        }
-        
-        /* 页脚 */
+        .arrow:hover{ background: rgba(0,0,0,0.65); transform:translateY(-50%) scale(1.06); }
+        .arrow.left{ left:18px; }
+        .arrow.right{ right:18px; }
+
+        /* 圆点 */
+        .dots { position:absolute; bottom:22px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:5; }
+        .dot { width:12px; height:12px; border-radius:50%; background:rgba(255,255,255,0.5); cursor:pointer; border:2px solid rgba(255,255,255,0.25); transition:transform .25s, background .25s; }
+        .dot.active { background:#fff; transform:scale(1.25); border-color:rgba(255,255,255,0.95); }
+
+        /* ===== 页面其它部分（保留你原本的样式，做少量整理） ===== */
+        .about { background-color: white; }
+        .about-content { display:flex; align-items:center; gap:50px; }
+        .about-text { flex:1; }
+        .about-image { flex:1; text-align:center; }
+        .about-image img { max-width:100%; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,.1); }
+
+        .skills { background-color:var(--light-color); }
+        .skills-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:30px; }
+        .skill-item { background:white; padding:30px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,.05); transition:transform .3s; }
+        .skill-item:hover{ transform:translateY(-10px); }
+        .skill-bar{ height:10px; background:#e0e0e0; border-radius:5px; margin-top:10px; overflow:hidden; }
+        .skill-level{ height:100%; background:var(--primary-color); border-radius:5px; }
+
+        .timeline{ position:relative; max-width:800px; margin:0 auto; }
+        .timeline::after{ content:''; position:absolute; width:6px; background-color:var(--primary-color); top:0; bottom:0; left:50%; margin-left:-3px; }
+        .timeline-item{ padding:10px 40px; position:relative; width:50%; box-sizing:border-box;}
+        .timeline-item:nth-child(odd){ left:0; }
+        .timeline-item:nth-child(even){ left:50%; }
+        .timeline-content{ padding:20px 30px; background:white; position:relative; border-radius:6px; box-shadow:0 5px 15px rgba(0,0,0,.1); }
+        .timeline-item::after{ content:''; position:absolute; width:25px; height:25px; right:-13px; background-color:white; border:4px solid var(--primary-color); top:15px; border-radius:50%; z-index:1; }
+        .timeline-item:nth-child(even)::after{ left:-12px; }
+
+        .contact { background-color:white; }
+        .contact-form { max-width:600px; margin:0 auto; }
+        .form-group{ margin-bottom:20px; }
+        .form-group label{ display:block; margin-bottom:5px; font-weight:500; }
+        .form-control{ width:100%; padding:12px; border:1px solid #ddd; border-radius:5px; font-size:16px; }
+        textarea.form-control{ min-height:150px; resize:vertical; }
+
         footer {
             background-color: var(--dark-color);
             color: white;
@@ -446,56 +251,59 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             width: 100%;
         }
-        
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .timeline::after {
-                left: 31px;
-            }
-            
-            .timeline-item {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
-            }
-            
-            .timeline-item:nth-child(even) {
-                left: 0;
-            }
-            
-            .timeline-item::after {
-                left: 18px;
-            }
-            
-            .timeline-item:nth-child(even)::after {
-                left: 18px;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .hero p {
-                font-size: 18px;
-            }
+
+        /* 通知样式（联系表单） */
+        .notification { display:none; padding:12px 18px; border-radius:8px; margin-top:12px; }
+        .notification.success{ background: #e6ffef; color:#0a6d3a; border:1px solid #b6f0c7; }
+        .notification.error{ background:#ffecec; color:#8b2a2a; border:1px solid #f1c7c7; }
+
+        /* 页面入场动画（轻微） */
+        .fade-in { animation:fadeInUp .6s ease both; }
+        @keyframes fadeInUp { from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;} }
+
+        /* 暗色模式 */
+        body.dark{ background:#101218; color:#e6eef6; }
+        body.dark header{ background:#0b0b0b; box-shadow:0 2px 10px rgba(0,0,0,.6); }
+        body.dark footer{ background:#08090a; }
+        body.dark .skill-item, body.dark .about, body.dark .contact { background:#0f1620; color:#cfdaf0; box-shadow:0 5px 15px rgba(0,0,0,.6); }
+        body.dark .nav-links a{ color:#cfdaf0; }
+        body.dark .dot{ background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.06); }
+        body.dark .dot.active{ background: #fff; }
+
+        /* 响应式 */
+        @media (max-width: 992px){
+            .about-content{ flex-direction:column; }
+        }
+        @media (max-width:768px){
+            .nav-links{ display:none; }
+            .hamburger{ display:block; }
+            .nav-mobile{ display:none; }
+            .timeline::after{ left:31px; }
+            .timeline-item{ width:100%; padding-left:70px; padding-right:25px; }
+            .timeline-item:nth-child(even){ left:0; }
+            .timeline-item::after{ left:18px; }
+            .timeline-item:nth-child(even)::after{ left:18px; }
+            .hero h1{ font-size:36px; }
+            .hero p{ font-size:18px; }
+        }
+
+        /* 小终端更小文字 */
+        @media (max-width:420px){
+            .avatar{ width:140px; height:140px; }
+            .arrow{ width:48px; height:48px; font-size:20px; }
         }
     </style>
 </head>
-<!-- Disabled right click -->
 <body oncontextmenu="return false">
-    <!-- 导航栏 -->
+    <!-- ========== Header ========== -->
     <header>
-        <div class="container">
-            <nav>
-                <img src="sp2.png" alt="logo" class="logo-img" style="max-width: 150px; padding: 10px">
+        <div class="container" style="display:flex;justify-content:space-between;align-items:center;">
+            <nav style="width:100%;display:flex;align-items:center;justify-content:space-between;">
+                <div class="logo" style="cursor:pointer">
+                    <!-- 点击 Logo 会触发彩蛋（已实现） -->
+                    <img src="sp2.png" alt="logo" id="siteLogo" style="max-width:150px; padding:10px">
+                </div>
+
                 <ul class="nav-links">
                     <li><a href="#home">首页</a></li>
                     <li><a href="#about">关于我</a></li>
@@ -503,26 +311,70 @@
                     <li><a href="#experience">经历</a></li>
                     <li><a href="#contact">联系方式</a></li>
                 </ul>
+
+                <!-- 右侧工具：暗色模式 + 汉堡 -->
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <button id="themeToggle" class="btn" title="切换暗色/亮色" style="padding:8px 12px;font-size:14px;">
+                        <i class="fa-regular fa-moon"></i>
+                    </button>
+                    <div class="hamburger" id="hamburgerBtn"><i class="fa-solid fa-bars"></i></div>
+                </div>
             </nav>
+
+            <!-- mobile nav -->
+            <div class="nav-mobile" id="navMobile">
+                <a href="#home" class="mobile-link">首页</a><br>
+                <a href="#about" class="mobile-link">关于我</a><br>
+                <a href="#skills" class="mobile-link">技能</a><br>
+                <a href="#experience" class="mobile-link">经历</a><br>
+                <a href="#contact" class="mobile-link">联系方式</a><br>
+            </div>
         </div>
     </header>
 
-    <!-- 英雄区域 -->
+    <!-- ========== HERO 区（包含轮播） ========== -->
     <section id="home" class="hero">
-        <div class="container">
+        <!-- Slider 容器 -->
+        <div class="slider" id="mainSlider" aria-hidden="false">
+            <div class="slides" id="slidesContainer">
+                <!-- 三张示例图（替换为你自己的图片路径） -->
+                <div class="slide" style="background-image: url('earth.jpg');" data-index="0"></div>
+                <div class="slide" style="background-image: url('OMEN_Techrunner.png');" data-index="1"></div>
+                <div class="slide" style="background-image: url('hok 1.jpg');" data-index="2"></div>
+            </div>
+
+            <!-- 箭头 -->
+            <div class="arrow left" id="prevBtn" aria-label="上一张"><i class="fa-solid fa-chevron-left"></i></div>
+            <div class="arrow right" id="nextBtn" aria-label="下一张"><i class="fa-solid fa-chevron-right"></i></div>
+
+            <!-- 圆点 -->
+            <div class="dots" id="dotsContainer" role="tablist" aria-label="轮播指示器">
+                <div class="dot" data-index="0" role="tab" aria-selected="false"></div>
+                <div class="dot" data-index="1" role="tab" aria-selected="false"></div>
+                <div class="dot" data-index="2" role="tab" aria-selected="false"></div>
+            </div>
+        </div>
+
+        <!-- 遮罩层 -->
+        <div class="hero-overlay"></div>
+
+        <!-- HERO 内容（头像 + 文字 + 按钮） -->
+        <div class="hero-content fade-in">
             <div class="avatar">
-                <img src="sp1.jpg" alt="Logo" class="logo-img">
+                <img src="sp1.jpg" alt="头像" onerror="this.style.display='none'">
+                <!-- 如果没有图，会显示文字占位 -->
                 <div style="width:100%;height:100%;background-color:#ddd;display:flex;align-items:center;justify-content:center;color:#999;">
-                    头像
+                    
                 </div>
             </div>
+
             <h1>嗨，我是学斌</h1>
             <p>一名热爱摄影，剪辑，编程的中学生</p>
             <a href="#contact" class="btn">联系我</a>
         </div>
     </section>
 
-    <!-- 关于我 -->
+    <!-- ========== 关于我 ========== -->
     <section id="about" class="about">
         <div class="container">
             <h2>关于我</h2>
@@ -534,45 +386,37 @@
                     <a href="#contact" class="btn">了解更多</a>
                 </div>
                 <div class="about-image">
-                    <img src="nsspc.jpg" alt="Logo" class="logo-img">
-                    </div>
+                    <img src="nsspc.jpg" alt="活动照片" class="fade-in">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 技能 -->
+    <!-- ========== 技能 ========== -->
     <section id="skills" class="skills">
         <div class="container">
             <h2>我的技能</h2>
             <div class="skills-grid">
                 <div class="skill-item">
                     <h3>摄影</h3>
-                    </p>掌握专业摄影技巧，熟悉使用各种相机设备</p>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: 80%"></div>
-                    </div>
+                    <p>掌握专业摄影技巧，熟悉使用各种相机设备</p>
+                    <div class="skill-bar"><div class="skill-level" style="width:80%"></div></div>
                 </div>
                 <div class="skill-item">
                     <h3>剪辑</h3>
                     <p>熟练使用 达芬奇 和 剪映</p>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: 85%"></div>
-                    </div>
+                    <div class="skill-bar"><div class="skill-level" style="width:85%"></div></div>
                 </div>
                 <div class="skill-item">
                     <h3>编程</h3>
                     <p>精通 C++, Python, HTML 等等</p>
-                    <div class="skill-bar">
-                        <div class="skill-level" style="width: 90%"></div>
-                    </div>
-                </div>
+                    <div class="skill-bar"><div class="skill-level" style="width:90%"></div></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 经历 -->
+    <!-- ========== 经历 ========== -->
     <section id="experience" class="experience">
         <div class="container">
             <h2>个人荣誉</h2>
@@ -589,13 +433,11 @@
                         <p>马来西亚计算挑战赛 (MCC 2025)</p>
                     </div>
                 </div>
-                
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- 联系我 -->
+    <!-- ========== 联系我 ========== -->
     <section id="contact" class="contact">
         <div class="container">
             <h2>联系我</h2>
@@ -616,61 +458,15 @@
                     </div>
                     <button type="submit" class="btn">发送消息</button>
                 </form>
-                
+
                 <div id="notification" class="notification"></div>
-                
-                <div class="alternative-contact">
-                    </p>
-                </div>
+
+                <div class="alternative-contact"></div>
             </div>
         </div>
     </section>
 
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // 获取表单数据
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            
-            // 验证表单
-            if (!name || !email || !message) {
-                showNotification('请填写所有必填字段', 'error');
-                return;
-            }
-            
-            // 使用mailto发送邮件
-            const subject = `来自 ${name} 的联系信息`;
-            const body = `姓名: ${name}%0D%0A邮箱: ${email}%0D%0A%0D%0A留言:%0D%0A${message}`;
-            
-            const mailtoLink = `mailto:tingshyepingofficial@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            
-            // 打开默认邮件客户端
-            window.location.href = mailtoLink;
-            
-            // 显示成功消息
-            showNotification('邮件客户端已打开，请发送邮件。如果未自动打开，请手动发送邮件至: tingshyepingofficial@gmail.com', 'success');
-            
-            // 重置表单
-            document.getElementById('contactForm').reset();
-        });
-        
-        function showNotification(message, type) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.className = 'notification ' + type;
-            notification.style.display = 'block';
-            
-            // 3秒后隐藏通知
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 5000);
-        }
-    </script>
-
-    <!-- 页脚 -->
+    <!-- ========== Footer ========== -->
     <footer>
         <div class="container">
             <div class="social-links">
@@ -682,50 +478,184 @@
             <p>Copyright &copy; <script>document.write(new Date().getFullYear())</script> 汤学斌 Ting Shye Ping</p>
         </div>
     </footer>
-</body>
+
+    <!-- ========== 脚本（轮播 + 表单 + 平滑滚动 + 暗色模式 + 彩蛋 + 手机菜单） ========== -->
     <script>
-        // 平滑滚动
+        /* -----------------------
+           轮播逻辑（含自动播放、暂停、箭头、圆点、触摸）
+           ----------------------- */
+        (function(){
+            const slides = Array.from(document.querySelectorAll('.slide'));
+            const dots = Array.from(document.querySelectorAll('.dot'));
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slider = document.getElementById('mainSlider');
+            let index = 0;
+            let timer = null;
+            const interval = 4000; // 自动切换间隔（毫秒）
+
+            // 初始化 - 打第 0 张
+            function setActive(i){
+                slides.forEach(s => s.classList.remove('active'));
+                dots.forEach(d => d.classList.remove('active'));
+                const realIndex = (i + slides.length) % slides.length;
+                slides[realIndex].classList.add('active');
+                dots[realIndex].classList.add('active');
+                dots.forEach((d, idx) => d.setAttribute('aria-selected', idx === realIndex ? 'true' : 'false'));
+                index = realIndex;
+            }
+
+            function next(){ setActive(index+1); }
+            function prev(){ setActive(index-1); }
+
+            // 自动播放
+            function startAuto(){ stopAuto(); timer = setInterval(next, interval); }
+            function stopAuto(){ if(timer) { clearInterval(timer); timer = null; } }
+
+            // 事件
+            nextBtn.addEventListener('click', next);
+            prevBtn.addEventListener('click', prev);
+            dots.forEach(d => d.addEventListener('click', () => setActive(Number(d.dataset.index))));
+
+            // 鼠标移上暂停
+            slider.addEventListener('mouseenter', stopAuto);
+            slider.addEventListener('mouseleave', startAuto);
+
+            // 触摸滑动支持（简易）
+            let startX = 0;
+            slider.addEventListener('touchstart', e => { startX = e.changedTouches[0].clientX; stopAuto(); });
+            slider.addEventListener('touchend', e => {
+                const dx = e.changedTouches[0].clientX - startX;
+                if(Math.abs(dx) > 40){
+                    if(dx > 0) prev(); else next();
+                }
+                startAuto();
+            });
+
+            // 键盘左右键
+            document.addEventListener('keydown', e => {
+                if(e.key === 'ArrowLeft') prev();
+                if(e.key === 'ArrowRight') next();
+            });
+
+            // 初始化显示并启动自动播放
+            setActive(0);
+            startAuto();
+        })();
+
+        /* -----------------------
+           联系表单（保留并小幅增强）
+           ----------------------- */
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            if(!name || !email || !message){
+                showNotification('请填写所有必填字段', 'error');
+                return;
+            }
+            const subject = `来自 ${name} 的联系信息`;
+            const body = `姓名: ${name}%0D%0A邮箱: ${email}%0D%0A%0D%0A留言:%0D%0A${message}`;
+            const mailtoLink = `mailto:tingshyepingofficial@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+            showNotification('邮件客户端已打开，请发送邮件。如果未自动打开，请手动发送邮件至: tingshyepingofficial@gmail.com', 'success');
+            document.getElementById('contactForm').reset();
+        });
+
+        function showNotification(message, type){
+            const note = document.getElementById('notification');
+            note.textContent = message;
+            note.className = 'notification ' + (type === 'success' ? 'success' : 'error');
+            note.style.display = 'block';
+            setTimeout(()=> { note.style.display = 'none'; }, 5000);
+        }
+
+        /* -----------------------
+           平滑滚动 & 导航高亮（保留并修正）
+           ----------------------- */
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
                 const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
+                if(!targetId || targetId === '#') return;
                 const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 70,
-                        behavior: 'smooth'
-                    });
-                }
+                if(!targetElement) return;
+                e.preventDefault();
+                // 隐藏移动导航（若开启）
+                const navMobile = document.getElementById('navMobile');
+                if(navMobile) navMobile.style.display = 'none';
+                window.scrollTo({ top: targetElement.offsetTop - 70, behavior: 'smooth' });
             });
         });
-        
-        // 导航栏高亮
+
         window.addEventListener('scroll', function() {
             const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('.nav-links a');
-            
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if(pageYOffset >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
+                if(pageYOffset >= sectionTop - 120) current = section.getAttribute('id');
             });
-            
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if(link.getAttribute('href').substring(1) === current) {
-                    link.classList.add('active');
-                }
+                if(link.getAttribute('href').substring(1) === current) link.classList.add('active');
             });
         });
+
+        /* -----------------------
+           暗色模式（记住设置）
+           ----------------------- */
+        (function(){
+            const btn = document.getElementById('themeToggle');
+            function applyTheme(dark){
+                document.body.classList.toggle('dark', dark);
+                // 切换按钮图标
+                btn.innerHTML = dark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-regular fa-moon"></i>';
+                try{ localStorage.setItem('prefersDark', dark ? '1' : '0'); }catch(e){}
+            }
+            // 初始检测：localStorage -> 系统偏好
+            let pref = null;
+            try{ pref = localStorage.getItem('prefersDark'); }catch(e){}
+            if(pref === null){
+                const prefers = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                applyTheme(prefers);
+            } else {
+                applyTheme(pref === '1');
+            }
+            btn.addEventListener('click', () => applyTheme(!document.body.classList.contains('dark')));
+        })();
+
+        /* -----------------------
+           Logo 彩蛋：连续点击 5 次触发小提示
+           ----------------------- */
+        (function(){
+            const logo = document.getElementById('siteLogo');
+            let count = 0, last = 0;
+            logo.addEventListener('click', () => {
+                const now = Date.now();
+                if(now - last > 1500) count = 0; // 超时重置
+                count++; last = now;
+                if(count >= 5){
+                    // 简单彩蛋：短暂通知
+                    alert('彩蛋：你发现了隐藏小秘密！🎉\n谢谢你关注我的作品。');
+                    count = 0;
+                }
+            });
+        })();
+
+        /* -----------------------
+           手机汉堡菜单
+           ----------------------- */
+        (function(){
+            const ham = document.getElementById('hamburgerBtn');
+            const mobile = document.getElementById('navMobile');
+            ham.addEventListener('click', () => {
+                if(mobile.style.display === 'block') mobile.style.display = 'none';
+                else mobile.style.display = 'block';
+            });
+            // 点击移动菜单链接后关闭
+            document.querySelectorAll('#navMobile .mobile-link').forEach(a => a.addEventListener('click', () => mobile.style.display = 'none'));
+        })();
     </script>
 </body>
-
 </html>
-
-
