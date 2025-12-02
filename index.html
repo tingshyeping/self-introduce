@@ -16,188 +16,105 @@
            =========================== */
         * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI','FZYingBiKaiShu-S15S', sans-serif; }
 :root{
-    --primary-color: #3498db;
-    --secondary-color: #2980b9;
-    --accent-color: #e74c3c;
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            --hero-overlay: rgba(0,0,0,0.4);
+        }
+        body{ background-color:#f9f9f9; color:var(--text-color); line-height:1.6; transition:background-color .3s, color .3s;}
+        .container{ max-width:1200px; margin:0 auto; padding:0 20px;}
+        section{ padding:80px 0;}
+        h1,h2,h3{ margin-bottom:20px; color:var(--dark-color); }
+        p{ margin-bottom:15px; }
+        .btn{ display:inline-block; padding:12px 30px; background-color:var(--primary-color); color:#fff; text-decoration:none; border-radius:5px; transition:all .3s; border:none; cursor:pointer; font-weight:600;}
+        .btn:hover{ background-color:var(--secondary-color); transform:translateY(-3px); box-shadow:0 5px 15px rgba(0,0,0,.1); }
 
-    --background-color: #f9f9f9; /* 新增 */
-    --dark-color: #2c3e50;
-    --text-color: #333;
-    --text-light: #7f8c8d;
+        /* ===== 导航栏 ===== */
+        header { background-color: white; box-shadow:0 2px 10px rgba(0,0,0,.08); position:fixed; width:100%; top:0; z-index:1000; }
+        nav{ display:flex; justify-content:space-between; align-items:center; padding:20px 0; }
+        .logo { font-size:24px; font-weight:700; color:var(--primary-color); display:flex; align-items:center; gap:12px; }
+        .logo img{ max-height:46px; display:block; }
+        .nav-links{ display:flex; list-style:none; gap:28px; align-items:center; }
+        .nav-links a{ text-decoration:none; color:var(--dark-color); font-weight:500; transition:color .3s; }
+        .nav-links a:hover, .nav-links a.active{ color:var(--primary-color); }
+        /* 手机汉堡按钮 */
+        .hamburger { display:none; cursor:pointer; font-size:22px; padding:8px; border-radius:6px; }
+        .nav-mobile { display:none; position:fixed; top:70px; right:20px; background:white; box-shadow:0 8px 30px rgba(0,0,0,.15); padding:12px 18px; border-radius:8px; z-index:1200; }
 
-    --hero-overlay: rgba(0,0,0,0.4);
-}
+        /* ===== HERO（轮播） =====
+           我把之前 hero::before 的纯背景动画改成了一个真正的滑动轮播容器，
+           支持淡入淡出、自动播放、暂停、箭头、圆点、触摸滑动
+        */
+        .hero {
+            position: relative;
+            margin-top: 70px; /* 留出固定头部 */
+            overflow: hidden;
+            height: 100vh;
+            min-height: 520px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
+        }
 
-body{
-    background-color: var(--background-color);
-    color:var(--text-color);
-    line-height:1.6;
-    transition:background-color .3s, color .3s;
-}
+        /* 轮播外壳（绝对定位填满 hero） */
+        .slider {
+            position:absolute;
+            inset:0;
+            overflow:hidden;
+        }
 
-.container{ max-width:1200px; margin:0 auto; padding:0 20px; }
-section{ padding:80px 0; }
+        .slides {
+            position:relative;
+            height:100%;
+            width:100%;
+        }
 
-h1,h2,h3{ margin-bottom:20px; color:var(--dark-color); }
-p{ margin-bottom:15px; }
+        .slide {
+            position:absolute;
+            inset:0;
+            background-size:cover;
+            background-position:center;
+            opacity:0;
+            transition:opacity 1s ease-in-out;
+            transform: scale(1.02);
+        }
+        .slide.active { opacity:1; transform: scale(1); }
 
-.btn{
-    display:inline-block;
-    padding:12px 30px;
-    background-color:var(--primary-color);
-    color:#fff;
-    text-decoration:none;
-    border-radius:5px;
-    transition:all .3s;
-    border:none;
-    cursor:pointer;
-    font-weight:600;
-}
-.btn:hover{
-    background-color:var(--secondary-color);
-    transform:translateY(-3px);
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
+        /* 遮罩层，增强可读性 */
+        .hero-overlay { position:absolute; inset:0; background:var(--hero-overlay); pointer-events:none; z-index:2; }
 
-/* ===== 导航栏 ===== */
-header {
-    background-color: var(--background-color); /* 修复 */
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
-    position:fixed;
-    width:100%;
-    top:0;
-    z-index:1000;
-}
+        /* HERO 内容（头像与文字）——置于轮播之上 */
+        .hero-content {
+            position:relative;
+            z-index:3;
+            text-align:center;
+            padding:30px;
+            width:100%;
+        }
+        .avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            background-color: white;
+            overflow: hidden;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-nav{ display:flex; justify-content:space-between; align-items:center; padding:20px 0; }
 
-.logo {
-    font-size:24px;
-    font-weight:700;
-    color:var(--primary-color); /* OK */
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.logo img{ max-height:46px; display:block; }
-
-.nav-links{ display:flex; list-style:none; gap:28px; align-items:center; }
-.nav-links a{
-    text-decoration:none;
-    color:var(--dark-color); /* 修复 */
-    font-weight:500;
-    transition:color .3s;
-}
-.nav-links a:hover, .nav-links a.active{
-    color:var(--primary-color);
-}
-
-/* 手机汉堡按钮 */
-.hamburger { display:none; cursor:pointer; font-size:22px; padding:8px; border-radius:6px; }
-
-.nav-mobile {
-    display:none;
-    position:fixed;
-    top:70px;
-    right:20px;
-    background:var(--background-color); /* 修复 */
-    box-shadow:0 8px 30px rgba(0,0,0,.15);
-    padding:12px 18px;
-    border-radius:8px;
-    z-index:1200;
-}
-
-/* ===== HERO（轮播） ===== */
-.hero {
-    position: relative;
-    margin-top: 70px;
-    overflow: hidden;
-    height: 100vh;
-    min-height: 520px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--text-color); /* 修复 */
-}
-
-.slider {
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-}
-
-.slides {
-    position:relative;
-    height:100%;
-    width:100%;
-}
-
-.slide {
-    position:absolute;
-    inset:0;
-    background-size:cover;
-    background-position:center;
-    opacity:0;
-    transition:opacity 1s ease-in-out;
-    transform: scale(1.02);
-}
-.slide.active { opacity:1; transform: scale(1); }
-
-/* 遮罩层 */
-.hero-overlay {
-    position:absolute;
-    inset:0;
-    background:var(--hero-overlay); /* OK */
-    pointer-events:none;
-    z-index:2;
-}
-
-/* HERO 内容 */
-.hero-content {
-    position:relative;
-    z-index:3;
-    text-align:center;
-    padding:30px;
-    width:100%;
-}
-
-.avatar {
-    width:200px;
-    height:200px;
-    border-radius:50%;
-    margin:0 auto 20px;
-    background:var(--background-color); /* 修复 */
-    overflow:hidden;
-    border:5px solid var(--background-color); /* 修复 */
-    box-shadow:0 5px 15px rgba(0,0,0,.2);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.avatar img {
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-}
-
-.hero h1{
-    font-size:48px;
-    margin-bottom:12px;
-    color:var(--dark-color); /* 修复成变量 */
-    text-shadow:0 6px 20px rgba(0,0,0,.5);
-}
-
-.hero p{
-    font-size:20px;
-    max-width:700px;
-    margin:0 auto 18px;
-    color:var(--text-light); /* 修复 */
-    text-shadow:0 4px 14px rgba(0,0,0,.45);
-}
-
+        .hero h1{ font-size:48px; margin-bottom:12px; color:#fff; text-shadow:0 6px 20px rgba(0,0,0,.5); }
+        .hero p{ font-size:20px; max-width:700px; margin:0 auto 18px; color:#f6f6f6; text-shadow:0 4px 14px rgba(0,0,0,.45); }
         /* 箭头 */
         .arrow {
             position:absolute;
@@ -741,6 +658,7 @@ nav{ display:flex; justify-content:space-between; align-items:center; padding:20
     </script>
 </body>
 </html>
+
 
 
 
