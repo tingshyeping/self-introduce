@@ -5,18 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" href="tsp.png" type="image/png">
     <title>个人介绍 | 汤学斌</title>
-
-    <!-- 字体与图标（和你原来一样） -->
     <link href="https://db.onlinewebfonts.com/c/db06deb90e37840ea564f982bed24d55?family=FZYingBiKaiShu-S15S" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* ===========================
-           基础样式（保留并扩展你原有的） 
-           =========================== */
-        /* ===========================
-   基础样式（保留并扩展你原有的） 
-   =========================== */
 :root {
     --primary-color: #3498db;
     --secondary-color: #2980b9;
@@ -108,8 +100,7 @@ p {
     transform: translateY(-3px); 
     box-shadow: 0 5px 15px var(--shadow-color); 
 }
-
-/* ===== 导航栏 ===== */
+        
 header { 
     background-color: var(--header-bg); 
     box-shadow: 0 2px 10px var(--shadow-color); 
@@ -147,12 +138,10 @@ header {
     color: var(--primary-color);
 }
 
-/* 暗色模式下的导航链接颜色 */
 body.dark .nav-links a {
     color: var(--text-color);
 }
 
-/* 手机汉堡按钮 */
 .hamburger { 
     display: none; 
     cursor: pointer; 
@@ -188,7 +177,6 @@ body.dark .nav-links a {
     color: var(--primary-color);
 }
 
-/* ===== HERO（轮播） ===== */
 .hero {
     position: relative;
     margin-top: 70px;
@@ -201,7 +189,6 @@ body.dark .nav-links a {
     color: white;
 }
 
-/* 轮播外壳（绝对定位填满 hero） */
 .slider {
     position: absolute;
     inset: 0;
@@ -228,7 +215,6 @@ body.dark .nav-links a {
     transform: scale(1); 
 }
 
-/* 遮罩层，增强可读性 */
 .hero-overlay { 
     position: absolute; 
     inset: 0; 
@@ -238,7 +224,6 @@ body.dark .nav-links a {
     transition: background 0.3s ease;
 }
 
-/* HERO 内容（头像与文字）——置于轮播之上 */
 .hero-content {
     position: relative;
     z-index: 3;
@@ -279,7 +264,6 @@ body.dark .nav-links a {
     text-shadow: 0 4px 14px rgba(0,0,0,.45); 
 }
 
-/* 箭头 */
 .arrow {
     position: absolute;
     top: 50%;
@@ -309,7 +293,6 @@ body.dark .nav-links a {
     right: 18px; 
 }
 
-/* 圆点 */
 .dots { 
     position: absolute; 
     bottom: 22px; 
@@ -334,7 +317,6 @@ body.dark .nav-links a {
     border-color: rgba(255,255,255,0.95); 
 }
 
-/* ===== 关于我 ===== */
 .about { 
     background-color: var(--card-bg); 
     transition: background-color 0.3s ease;
@@ -362,7 +344,6 @@ body.dark .nav-links a {
     box-shadow: 0 5px 15px var(--shadow-color);
 }
 
-/* ===== 技能 ===== */
 .skills { 
     background-color: var(--bg-color);
 }
@@ -397,7 +378,6 @@ body.dark .nav-links a {
     border-radius: 5px;
 }
 
-/* ===== 经历 ===== */
 .experience { 
     background-color: var(--card-bg);
     transition: background-color 0.3s ease;
@@ -459,7 +439,6 @@ body.dark .nav-links a {
     left: -12px; 
 }
 
-/* ===== 联系我 ===== */
 .contact { 
     background-color: var(--card-bg);
     transition: background-color 0.3s ease;
@@ -503,7 +482,6 @@ textarea.form-control {
     resize: vertical;
 }
 
-/* ===== Footer ===== */
 footer {
     background-color: var(--footer-bg);
     color: var(--text-color);
@@ -557,7 +535,6 @@ footer {
     box-shadow: 0 10px 15px var(--shadow-color);
 }
 
-/* 各个社交媒体图标的特定颜色 */
 .social-links a:nth-child(1) {
     background-color: #333; /* GitHub */
 }
@@ -584,7 +561,6 @@ footer p {
     color: white;
 }
 
-/* 通知样式（联系表单） */
 .notification { 
     display: none; 
     padding: 12px 18px; 
@@ -605,7 +581,6 @@ footer p {
     border: 1px solid rgba(239, 83, 80, 0.3);
 }
 
-/* 暗色模式下的通知样式 */
 body.dark .notification.success {
     background: rgba(102, 187, 106, 0.2);
     color: #81c784;
@@ -616,7 +591,6 @@ body.dark .notification.error {
     color: #ef9a9a;
 }
 
-/* 页面入场动画（轻微） */
 .fade-in { 
     animation: fadeInUp 0.6s ease both;
 }
@@ -626,7 +600,6 @@ body.dark .notification.error {
     to { opacity: 1; transform: none; }
 }
 
-/* 响应式 */
 @media (max-width: 992px) {
     .about-content { 
         flex-direction: column;
@@ -673,7 +646,6 @@ body.dark .notification.error {
     }
 }
 
-/* 小终端更小文字 */
 @media (max-width: 420px) {
     .avatar { 
         width: 140px; 
@@ -697,7 +669,6 @@ body.dark .notification.error {
     }
 }
 
-/* 暗色模式下的滚动条 */
 body.dark ::-webkit-scrollbar {
     width: 10px;
 }
@@ -722,7 +693,7 @@ body.dark ::-webkit-scrollbar-thumb:hover {
         <div class="container" style="display:flex;justify-content:space-between;align-items:center;">
             <nav style="width:100%;display:flex;align-items:center;justify-content:space-between;">
                 <div class="logo" style="cursor:pointer">
-                    <!-- 点击 Logo 会触发彩蛋（已实现） -->
+                    <!-- 点击 Logo 会触发彩蛋 -->
                     <span style="font-weight:700;color:var(--primary-color)">汤学斌</span>
                 </div>
 
@@ -736,7 +707,7 @@ body.dark ::-webkit-scrollbar-thumb:hover {
 
                 <!-- 右侧工具：暗色模式 + 汉堡 -->
                 <div style="display:flex;align-items:center;gap:12px;">
-                    <button id="themeToggle" class="btn" title="切换暗色/亮色" style="padding:8px 12px;font-size:14px;">
+                    <button id="themeToggle" class="btn" title="切换深色模式/浅色模式" style="padding:8px 12px;font-size:14px;">
                         <i class="fa-regular fa-moon"></i>
                     </button>
                     <div class="hamburger" id="hamburgerBtn"><i class="fa-solid fa-bars"></i></div>
@@ -754,12 +725,12 @@ body.dark ::-webkit-scrollbar-thumb:hover {
         </div>
     </header>
 
-    <!-- ========== HERO 区（包含轮播） ========== -->
+    <!-- ========== 照片区（包含轮播） ========== -->
     <section id="home" class="hero">
         <!-- Slider 容器 -->
         <div class="slider" id="mainSlider" aria-hidden="false">
             <div class="slides" id="slidesContainer">
-                <!-- 三张示例图（替换为你自己的图片路径） -->
+                <!-- 三张示例图 -->
                 <div class="slide" style="background-image: url('earth.jpg');" data-index="0"></div>
                 <div class="slide" style="background-image: url('OMEN_Techrunner.png');" data-index="1"></div>
                 <div class="slide" style="background-image: url('hok 1.jpg');" data-index="2"></div>
@@ -901,11 +872,7 @@ body.dark ::-webkit-scrollbar-thumb:hover {
         </div>
     </footer>
 
-    <!-- ========== 脚本（轮播 + 表单 + 平滑滚动 + 暗色模式 + 彩蛋 + 手机菜单） ========== -->
     <script>
-        /* -----------------------
-           轮播逻辑（含自动播放、暂停、箭头、圆点、触摸）
-           ----------------------- */
         (function(){
             const slides = Array.from(document.querySelectorAll('.slide'));
             const dots = Array.from(document.querySelectorAll('.dot'));
@@ -965,9 +932,7 @@ body.dark ::-webkit-scrollbar-thumb:hover {
             startAuto();
         })();
 
-        /* -----------------------
-           联系表单（保留并小幅增强）
-           ----------------------- */
+
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('name').value.trim();
@@ -993,9 +958,6 @@ body.dark ::-webkit-scrollbar-thumb:hover {
             setTimeout(()=> { note.style.display = 'none'; }, 5000);
         }
 
-        /* -----------------------
-           平滑滚动 & 导航高亮（保留并修正）
-           ----------------------- */
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
@@ -1047,9 +1009,6 @@ body.dark ::-webkit-scrollbar-thumb:hover {
             btn.addEventListener('click', () => applyTheme(!document.body.classList.contains('dark')));
         })();
 
-        /* -----------------------
-           Logo 彩蛋：连续点击 5 次触发小提示
-           ----------------------- */
         (function(){
             const logo = document.getElementById('siteLogo');
             let count = 0, last = 0;
@@ -1065,9 +1024,6 @@ body.dark ::-webkit-scrollbar-thumb:hover {
             });
         })();
 
-        /* -----------------------
-           手机汉堡菜单
-           ----------------------- */
         (function(){
             const ham = document.getElementById('hamburgerBtn');
             const mobile = document.getElementById('navMobile');
@@ -1075,18 +1031,8 @@ body.dark ::-webkit-scrollbar-thumb:hover {
                 if(mobile.style.display === 'block') mobile.style.display = 'none';
                 else mobile.style.display = 'block';
             });
-            // 点击移动菜单链接后关闭
             document.querySelectorAll('#navMobile .mobile-link').forEach(a => a.addEventListener('click', () => mobile.style.display = 'none'));
         })();
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
